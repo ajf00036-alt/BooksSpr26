@@ -1,0 +1,43 @@
+﻿@model Category
+
+<h1>Category Details</h1>
+
+<div class="border col-md-10 mx-auto">
+
+    <form asp-action="Details">
+
+        <input type="hidden" asp-for="CategoryId"/>
+
+        <div class="form-group row m-4">
+
+            <label asp-for="Name" class="control-label col-md-2"></label>
+
+            <div>
+
+                <input asp-for="Name" readonly class="form-control col-10" />
+
+            </div>
+
+        </div>
+
+        <div class="form-group row m-4">
+
+            <label asp-for="Description" class="control-label col-md-2"></label>
+
+            <div>
+
+                <input asp-for="Description" readonly class="form-control col-10" />
+
+            </div>
+
+        </div>
+
+         <div class="form-group row m-4">
+
+            <a asp-controller="Category" asp-action="Index">Back</a>
+
+        </div>
+
+    </form>
+
+</div>

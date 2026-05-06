@@ -1,0 +1,206 @@
+﻿@model OrderVM
+
+<form method="post">
+
+    @Html.AntiForgeryToken()
+
+    <input asp-for="order.OrderId" hidden />
+
+    <div class="card text-center rounded shadow">
+        <div class="row m-3 px-4">
+            <div class="col-12  bg-primary rounded py-2 my-3">
+                <p class="card-title text-start text-white">Order Information</p>
+            </div>
+
+            <div class="col-6">
+                <div class="text-start fw-bold">
+                    Shipping Information:
+                </div>
+
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.CustomerName" class="form-control" aria-required="true" placeholder="Customer Name" />
+                    <label asp-for="order.CustomerName">Full Name</label>
+                    <span asp-validation-for="order.CustomerName" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.StreetAddress" class="form-control" aria-required="true" placeholder="street address" />
+                    <label asp-for="order.StreetAddress">Street Address</label>
+                    <span asp-validation-for="order.StreetAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.City" class="form-control" aria-required="true" placeholder="City" />
+                    <label asp-for="order.City">City</label>
+                    <span asp-validation-for="order.City" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.PostalCode" class="form-control" aria-required="true" placeholder="Postal Code" />
+                    <label asp-for="order.PostalCode">Postal Code</label>
+                    <span asp-validation-for="order.PostalCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.State" class="form-control" aria-required="true" placeholder="State" />
+                    <label asp-for="order.State">State</label>
+                    <span asp-validation-for="order.State" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.Phone" class="form-control" aria-required="true" placeholder="Phone" />
+                    <label asp-for="order.Phone">Phone</label>
+                    <span asp-validation-for="order.Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.OrderStatus" class="form-control" aria-required="true" placeholder="Order Status" />
+                    <label asp-for="order.OrderStatus">Order Status</label>
+                    <span asp-validation-for="order.OrderStatus" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.OrderDate" type="Date" class="form-control" aria-required="true" placeholder="Order Date" />
+                    <label asp-for="order.OrderDate">Order Date</label>
+                    <span asp-validation-for="order.OrderDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.Carrier" class="form-control" aria-required="true" placeholder="Carrier" />
+                    <label asp-for="order.Carrier">Carrier</label>
+                    <span asp-validation-for="order.Carrier" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.ShippingDate" type="Date" class="form-control" aria-required="true" placeholder="ShippingDate" />
+                    <label asp-for="order.ShippingDate">Shipping Date</label>
+                    <span asp-validation-for="order.ShippingDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-1">
+                    <input asp-for="order.TrackingNumber" class="form-control" aria-required="true" placeholder="Phone" />
+                    <label asp-for="order.TrackingNumber">Tracking Number</label>
+                    <span asp-validation-for="order.TrackingNumber" class="text-danger"></span>
+                </div>
+
+                <div class="my-4">
+
+                    <button type="submit" asp-action="UpdateOrderInformation" class="btn btn-warning form-control">Update Order Information</button>
+
+                </div>
+
+
+            </div>
+
+            <div class="col-6 border rounded">
+
+                <div class="text-start fw-bold">
+                    Order Details:
+                </div>
+
+
+                @foreach (var item in Model.OrderDetails)
+                {
+                    <div class="row ">
+
+
+                        <div class="col-6">
+
+                            <strong> @item.Book.BookTitle </strong>
+
+
+
+
+                        </div>
+
+
+                        <div class="col-3">
+
+
+                            @item.Book.Price.ToString("c") &nbsp; x &nbsp; @item.Quantity
+
+
+
+
+
+
+                        </div>
+
+                        <div class="col-3">
+                            Subtotal : @((item.Price * item.Quantity).ToString("c"))
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+                }
+
+                <div class="card-footer bg-black text-white col-12 text-end">
+
+                    Order Total : @Model.order.OrderTotal.ToString("c")
+                </div>
+
+                @if (Model.order.OrderStatus == "Pending")
+                {
+                    <div>
+
+                        <button type="submit" asp-action="ProcessOrder" class="my-4 btn btn-primary form-control">Process Order</button>
+
+                    </div>
+                }
+                else
+                {
+                    <div>
+
+                        <button type="submit" disabled asp-action="ProcessOrder" class="my-4 btn btn-primary form-control">Process Order</button>
+
+                    </div>        
+
+                }
+
+                @if(Model.order.OrderStatus == "Processing")
+                {
+                    <div>
+
+                        <button type="submit" asp-action="CompleteOrder" class="my-4 btn btn-primary form-control">Complete Order</button>
+
+                    </div>
+                }
+                else
+                {
+                    <div>
+
+                        <button type="submit" disabled asp-action="CompleteOrder" class="my-4 btn btn-primary form-control">Complete Order</button>
+
+                    </div>
+                }
+
+            </div>
+
+            @* <div class="card-footer">
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">Place Order</button>
+                </div>
+
+            </div> *@
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+</form>
+

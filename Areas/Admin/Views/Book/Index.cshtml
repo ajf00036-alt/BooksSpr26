@@ -1,0 +1,52 @@
+﻿@model List<Book>
+
+<h1>Book List</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+
+        <tr>
+
+            <th>BookTitle</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>Price</th>
+            @* <th>CategoryId</th> *@
+
+    <tbody>
+
+        @foreach (var eachBook in Model)
+        {
+
+            <tr>
+
+                <td>@eachBook.BookTitle</td>
+                <td>@eachBook.Author</td>
+                <td>@eachBook.Description</td>
+                <td>@eachBook.Price</td>
+                @* <td>@eachBook.CategoryId</td> *@
+                <th></th>
+
+                <td>
+
+                    <a asp-controller="Book" asp-action="Edit" asp-route-id="@eachBook.BookId">Edit</a> | <a asp-controller="Book" asp-action="Details" asp-route-id="@eachBook.BookId">Details</a> | <a asp-controller="Book" asp-action="Delete" asp-route-id="@eachBook.BookId">Delete</a>
+
+                </td>
+
+            </tr>
+
+        }
+
+    </tbody>
+
+    </tr>
+
+    </thead>
+
+</table>
+
+<div class="col-md-12 text-end">
+
+    <a asp-controller="Book" asp-action="Create" class="btn btn-primary">Create New Book</a>
+
+</div>
